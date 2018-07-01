@@ -1,5 +1,3 @@
-//enablePlugins(JavaAppPackaging)
-//enablePlugins(UniversalPlugin)
 enablePlugins(JavaAppPackaging)
 
 import Dependencies._
@@ -21,21 +19,24 @@ val addToPath = taskKey[Unit]("link it")
 addToPath := {
   import ammonite.ops._
   val log = streams.value.log
-  val com = (Compile / compile).value
-  val st  = (Universal / stage).value
+  //compile
+  (Compile / compile).value
+  //stage
+  val stagePath: String = (Universal / stage).value.getAbsolutePath
+//  log.info(s"stage file absolute path: $stagePath")
 
-  log.info("current dir")
-  log.info(s"pwd = ${pwd}")
-  log.info((Universal / executableScriptName).value)
-  val absolutePath = Path((Universal / target).value.getAbsolutePath)
-  log.info(absolutePath.toString())
+//  log.info((Universal / executableScriptName).value)
+//  val universalDirectory = Path((Universal / target).value.getAbsolutePath)
+//  log.info(s"Universal directory = ${universalDirectory.toString()}")
 
-  val completePath = absolutePath / 'stage / 'bin / normalizedName.value
+  val binaryName = (Universal / executableScriptName).value
+  //  val completePath = universalDirectory / 'stage / 'bin / normalizedName.value
+  val completePath = Path(stagePath) / 'bin / binaryName
 
   log.info(s"completePath = ${completePath}")
 
 //  ln(home/".sclins"/normalizedName.value,completePath)
 //  ln(completePath,home/".sclins"/normalizedName.value)
-  %('ln, "-sfv", completePath, home / ".sclins" / normalizedName.value)(pwd)
+  %('ln, "-sfv", completePath, home / ".sclins" / binaryName)(pwd)
 
 }
