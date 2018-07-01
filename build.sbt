@@ -5,19 +5,19 @@ import Dependencies._
 lazy val root = (project in file(".")).settings(
   inThisBuild(
     List(
-      organization := "com.example",
+      organization := "com.naumanbadar",
       scalaVersion := "2.12.6",
       version := "0.1.0-SNAPSHOT"
     )),
-  name := "TryPackage",
+  name := "Scala Project Installer",
   libraryDependencies += scalaTest % Test,
   libraryDependencies += ammoniteio
 )
 
-val addToPath = taskKey[Unit]("link it")
+val installLocal = taskKey[Unit](s"Links binary to ")
 
-addToPath := {
-  import ammonite.ops._
+installLocal := {
+import ammonite.ops._
   val log = streams.value.log
   //compile
   (Compile / compile).value
