@@ -23,22 +23,13 @@ installLocal := {
   (Compile / compile).value
   //stage
   val stagePath: String = (Universal / stage).value.getAbsolutePath
-//  log.info(s"stage file absolute path: $stagePath")
-
-//  log.info((Universal / executableScriptName).value)
-//  val universalDirectory = Path((Universal / target).value.getAbsolutePath)
-//  log.info(s"Universal directory = ${universalDirectory.toString()}")
 
   val binaryName = (Universal / executableScriptName).value
-  //  val completePath = universalDirectory / 'stage / 'bin / normalizedName.value
-  val completePath = Path(stagePath) / 'bin / binaryName
+  val binaryPath = Path(stagePath) / 'bin / binaryName
+  val binaryLink = home / ".sclins" / binaryName
 
-  val link = home / ".sclins" / binaryName
+  log.info(s"""Linking your script at "$binaryPath" to "$binaryLink"""")
 
-  log.info(s"""Linking your script at "$completePath" to "$link"""")
-
-//  ln(home/".sclins"/normalizedName.value,completePath)
-//  ln(completePath,home/".sclins"/normalizedName.value)
-  %('ln, "-sf", completePath, link)(pwd)
+  %('ln, "-sf", binaryPath, binaryLink)(pwd)
 
 }
