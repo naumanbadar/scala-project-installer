@@ -20,8 +20,7 @@ val addToPath = taskKey[Unit]("link it")
 
 addToPath := {
   val com = (Compile / compile).value
-  val st = (Universal / stage).value
-
+  val st  = (Universal / stage).value
 
   import ammonite.ops._
   println("current dir")
@@ -30,12 +29,12 @@ addToPath := {
   val absolutePath = Path((Universal / target).value.getAbsolutePath)
   println(absolutePath)
 
-  val completePath = absolutePath / 'stage/ 'bin/ normalizedName.value
+  val completePath = absolutePath / 'stage / 'bin / normalizedName.value
 
   println(s"completePath = ${completePath}")
 
 //  ln(home/".sclins"/normalizedName.value,completePath)
 //  ln(completePath,home/".sclins"/normalizedName.value)
-  %('ln,"-s",completePath,home/".sclins"/normalizedName.value)(pwd)
+  %('ln, "-sfv", completePath, home / ".sclins" / normalizedName.value)(pwd)
 
 }

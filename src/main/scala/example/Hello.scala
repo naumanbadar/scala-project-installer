@@ -1,7 +1,9 @@
 package example
 
+import ammonite.ops._
+
 object Hello extends Greeting with App {
-  println(greeting)
+  println(s"$greeting from $pwd")
 
   println(s"greeting = ${args.toList}")
 }
