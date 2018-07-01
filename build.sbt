@@ -33,10 +33,12 @@ addToPath := {
   //  val completePath = universalDirectory / 'stage / 'bin / normalizedName.value
   val completePath = Path(stagePath) / 'bin / binaryName
 
-  log.info(s"completePath = ${completePath}")
+  val link = home / ".sclins" / binaryName
+
+  log.info(s"""Linking your script at "$completePath" to "$link"""")
 
 //  ln(home/".sclins"/normalizedName.value,completePath)
 //  ln(completePath,home/".sclins"/normalizedName.value)
-  %('ln, "-sfv", completePath, home / ".sclins" / binaryName)(pwd)
+  %('ln, "-sf", completePath, link)(pwd)
 
 }
