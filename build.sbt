@@ -19,19 +19,20 @@ lazy val root = (project in file(".")).settings(
 val addToPath = taskKey[Unit]("link it")
 
 addToPath := {
+  import ammonite.ops._
+  val log = streams.value.log
   val com = (Compile / compile).value
   val st  = (Universal / stage).value
 
-  import ammonite.ops._
-  println("current dir")
-  println(s"pwd = ${pwd}")
-  println((Universal / executableScriptName).value)
+  log.info("current dir")
+  log.info(s"pwd = ${pwd}")
+  log.info((Universal / executableScriptName).value)
   val absolutePath = Path((Universal / target).value.getAbsolutePath)
-  println(absolutePath)
+  log.info(absolutePath.toString())
 
   val completePath = absolutePath / 'stage / 'bin / normalizedName.value
 
-  println(s"completePath = ${completePath}")
+  log.info(s"completePath = ${completePath}")
 
 //  ln(home/".sclins"/normalizedName.value,completePath)
 //  ln(completePath,home/".sclins"/normalizedName.value)
