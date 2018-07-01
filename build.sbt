@@ -14,10 +14,10 @@ lazy val root = (project in file(".")).settings(
   libraryDependencies += ammoniteio
 )
 
-val installLocal = taskKey[Unit](s"Links binary to ")
+val installLocal = taskKey[Unit]("Links binary to your $HOME/.sclins")
 
 installLocal := {
-import ammonite.ops._
+  import ammonite.ops._
   val log = streams.value.log
   //compile
   (Compile / compile).value
